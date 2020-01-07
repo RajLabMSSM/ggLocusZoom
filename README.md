@@ -22,11 +22,17 @@ In command line:
 
 
 ### 2. Prepare your data  
+
+#### GWAS/QTL summary statistics
 - Required columns in sumstats data (one SNP per row):
-  + `SNP` :  rsid (e.g. rs4698412)
-  + `P` : uncorrected p-value from GWAS (e.g. 2.058e-28)
-  + `CHR` : chromosome (e.g. 4)
-  + `POS` :  genomic position in terms of bp (e.g. 15737348)
+  + `SNP` :  RSID (e.g. rs4698412)
+  + `P` : Uncorrected p-value from GWAS (e.g. 2.058e-28)
+  + `CHR` : Chromosome (e.g. 4)
+  + `POS` :  Genomic position in terms of bp (e.g. 15737348)  
+  
+#### LD matrix  
+- An *n* x *n* matrix where *n* is the number of SNPs in your summary stats file. Column and row names must be the RSIDs of the SNPs.
+- Can be `.RDS`, `.csv`, `.tsv`, or `.txt` format.  
 
 ### 3. Open R     
 ```
@@ -37,7 +43,7 @@ source("./ggLocusZoom.R")
 gglz <- ggLocusZoom(# Specify where the summary stats file is.
                     sumstats_path="./example_data/BST1_Nalls23andMe_2019_subset.txt",
                     
-                    # Specify where the pre-computed LD matrix is (can be .RDS, .csv, .tsv, or .txt format).
+                    # Specify where the pre-computed LD matrix is.
                     LD_path="../example_data/UKB_LD.RDS",
                     
                     # Is the LD matrix in units of r? (as opposed to r2)
