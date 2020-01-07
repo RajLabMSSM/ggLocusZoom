@@ -21,7 +21,17 @@ So I made a user-friendly version of it in R that allows you to customize it as 
 
 ## How?  
 
+### 1. Clone this GitHub repo  
+In command line:
+`git clone https://github.com/RajLabMSSM/ggLocusZoom.git`
+`cd ggLocusZoom`
+
+### 2. Open R:   
 ```
+# Import the functions
+source("./ggLocusZoom.R")
+
+# Run 
 gglz <- ggLocusZoom(
                     # Specify where the summary stats are.
                     sumstats_path="./example_data/BST1_Nalls23andMe_2019_subset.txt", 
@@ -45,7 +55,7 @@ gglz <- ggLocusZoom(
                     categorical_r2=T)
 ```
 
-### 1. 
+
   
 <hr><hr>
 
