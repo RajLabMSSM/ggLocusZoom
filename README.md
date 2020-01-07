@@ -24,7 +24,7 @@ In command line:
 ### 2. Prepare your data  
 
 #### GWAS/QTL summary statistics
-- Required columns in sumstats data (one SNP per row):
+- Required columns in summary stats data (one SNP per row):
   + `SNP` :  RSID (e.g. rs4698412)
   + `P` : Uncorrected p-value from GWAS (e.g. 2.058e-28)
   + `CHR` : Chromosome (e.g. 4)
@@ -82,6 +82,7 @@ gglz <- ggLocusZoom(# Specify where the summary stats file is.
 - `BST1_Nalls23andMe_2019_subset.txt`: Summary stats from the PD GWAS in [Nalls et al. (2019)](https://www.biorxiv.org/content/10.1101/388165v3).  
 
 ### R Dependencies  
+- [ggplot2](https://ggplot2.tidyverse.org)
 - [ggbio](https://bioconductor.org/packages/release/bioc/html/ggbio.html)
 - [dplyr](https://cran.r-project.org/package=dplyr/vignettes/dplyr.html)
 - [EnsDb.Hsapiens.v75](http://bioconductor.org/packages/release/data/annotation/html/EnsDb.Hsapiens.v75.html)
