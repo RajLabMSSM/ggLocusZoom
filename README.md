@@ -7,16 +7,16 @@
 
 There is a [standalone version of LocusZoom](https://github.com/statgen/locuszoom-standalone) for R and Python, but unfortunately it requires downloading 23GB of data to get all of the databases it relies on. Even if you supply your own data (summary stats, LD, etc.), it's not particularly user friendly. Nor can you customize it further once you have it.
 
-So I made a user-friendly version of it in R that allows you to customize it as a ggplot-like object. Right now you need to supply your own LD, but I'd like to add API access to this kind of data eventually (e.g 1000Genomes Phase 1 & 3, UKBiobank).
-
-**Note**: LocusZoom now offers the ability to upload all your sum stats at once and make plots for each locus, which helps reduce the redundancy of making each plot individually.
-
+So I made a user-friendly version of it in R that allows you to customize it as a ggplot-like object. Right now you need to supply your own LD, but I'd like to add API access to this kind of data eventually (e.g. 1000Genomes Phase 1 & 3, UKBiobank).
 
 - Required columns in sumstats data (one SNP per row):
   + `SNP` :  rsid (e.g. rs4698412)
   + `P` : uncorrected p-value from GWAS (e.g. 2.058e-28)
   + `CHR` : chromosome (e.g. 4)
   + `POS` :  genomic position in terms of bp (e.g. 15737348)
+  
+
+**Note**: [my.LocusZoom](https://my.locuszoom.org) now offers the ability to upload all your sum stats at once and make plots for each locus, which helps reduce the redundancy of making each plot individually.
   
 <hr>
 
@@ -33,10 +33,10 @@ In command line:
 source("./ggLocusZoom.R")
 
 # Run 
-gglz <- ggLocusZoom(# Specify where the summary stats are.
+gglz <- ggLocusZoom(# Specify where the summary stats file is.
                     sumstats_path="./example_data/BST1_Nalls23andMe_2019_subset.txt",
                     
-                    # Specify where the pre-computed LD matrix is.
+                    # Specify where the pre-computed LD matrix is (can be .RDS, .csv, .tsv, or .txt format).
                     LD_path="../example_data/UKB_LD.RDS",
                     
                     # Is the LD matrix in units of r? (as opposed to r2)
