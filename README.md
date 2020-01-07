@@ -9,13 +9,6 @@ There is a [standalone version of LocusZoom](https://github.com/statgen/locuszoo
 
 So I made a user-friendly version of it in R that allows you to customize it as a ggplot-like object. Right now you need to supply your own LD, but I'd like to add API access to this kind of data eventually (e.g. 1000Genomes Phase 1 & 3, UKBiobank).
 
-- Required columns in sumstats data (one SNP per row):
-  + `SNP` :  rsid (e.g. rs4698412)
-  + `P` : uncorrected p-value from GWAS (e.g. 2.058e-28)
-  + `CHR` : chromosome (e.g. 4)
-  + `POS` :  genomic position in terms of bp (e.g. 15737348)
-  
-
 **Note**: [my.LocusZoom](https://my.locuszoom.org) now offers the ability to upload all your sum stats at once and make plots for each locus, which helps reduce the redundancy of making each plot individually.
   
 <hr>
@@ -27,7 +20,15 @@ In command line:
 `git clone https://github.com/RajLabMSSM/ggLocusZoom.git`  
 `cd ggLocusZoom`
 
-### 2. Open R:   
+
+### 2. Prepare your data  
+- Required columns in sumstats data (one SNP per row):
+  + `SNP` :  rsid (e.g. rs4698412)
+  + `P` : uncorrected p-value from GWAS (e.g. 2.058e-28)
+  + `CHR` : chromosome (e.g. 4)
+  + `POS` :  genomic position in terms of bp (e.g. 15737348)
+
+### 3. Open R     
 ```
 # Import the functions
 source("./ggLocusZoom.R")
