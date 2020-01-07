@@ -71,9 +71,16 @@ gglz <- ggLocusZoom(# Specify where the summary stats file is.
 ## Wut?   
 
 ### Example data sources  
-- `UKB_LD.RDS`: LD matrix from [UKBiobank](https://www.ukbiobank.ac.uk), preprocessed and made available by the Alkes Price lab.
-- `BST1_Nalls23andMe_2019_subset.txt`: Summary stats from the PD GWAS in [Nalls et al. (2019)](https://www.biorxiv.org/content/10.1101/388165v3).
-  
+- `UKB_LD.RDS`: LD matrix from [UKBiobank](https://www.ukbiobank.ac.uk), preprocessed and made available by the Alkes Price lab.  
+- `BST1_Nalls23andMe_2019_subset.txt`: Summary stats from the PD GWAS in [Nalls et al. (2019)](https://www.biorxiv.org/content/10.1101/388165v3).  
+
+### R Dependencies  
+- [ggbio](https://bioconductor.org/packages/release/bioc/html/ggbio.html)
+- [dplyr](https://cran.r-project.org/package=dplyr/vignettes/dplyr.html)
+- [EnsDb.Hsapiens.v75](http://bioconductor.org/packages/release/data/annotation/html/EnsDb.Hsapiens.v75.html)
+- [BiocManager](https://cran.r-project.org/web/packages/BiocManager/vignettes/BiocManager.html)
+- [biovizBase](https://bioconductor.org/packages/release/bioc/html/biovizBase.html)
+
 <hr> 
 
 ## Who?  
