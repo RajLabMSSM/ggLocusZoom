@@ -1,8 +1,8 @@
 
 
  
-ggLocusZoom <- function(sumstats_path="./example_data/BST1_Nalls23andMe_2019_subset.txt", 
-                        LD_path="../example_data/UKB_LD.RDS",
+ggLocusZoom <- function(sumstats_path, 
+                        LD_path,
                         LD_units="r",
                         show_plot=T,
                         save_plot="./ggLocusZoom.png",

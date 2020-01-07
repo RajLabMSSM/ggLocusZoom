@@ -46,7 +46,7 @@ gglz <- ggLocusZoom(# Specify where the summary stats are.
                     show_plot=T,
                     
                     # Save the plot? (=F if you don't want to)
-                    save_plot="./ggLocusZoom.png",
+                    save_plot="./BST1_ggLocusZoom.png",
                     
                     # Saved plot height.
                     height=5, 
@@ -64,6 +64,7 @@ gglz <- ggLocusZoom(# Specify where the summary stats are.
                     # (very low, low, medium, high, very high) or a continuous variable (0-1).
                     categorical_r2=T)
 ```
+![ggLocusZoom_example](./BST1_ggLocusZoom.png)
 
 <hr> 
 
