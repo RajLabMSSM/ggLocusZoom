@@ -31,8 +31,13 @@ In command line:
   + `POS` :  Genomic position in terms of bp (e.g. 15737348)  
   
 #### LD matrix  
+
+##### Method 1: Supply your own LD matrix  
+
 - An *n* x *n* matrix where *n* is the number of SNPs in your summary stats file. Column and row names must be the RSIDs of the SNPs.
 - Can be `.RDS`, `.csv`, `.tsv`, or `.txt` format.  
+
+##### Method 2: Use the LD.UKBibank() function to download the LD matrix  
 
 - If you don't have your own LD matrix, you can download it via the `LD.UKBibank()` function provided here. It will return the path to where the LD matrix was saved.
 
