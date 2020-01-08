@@ -72,7 +72,8 @@ LD_path <- LD.UKBiobank(# Specify where the summary stats file is.
                          # access to the 'pd-omics' project.
                          chimera=F, 
                          
-                         # [** WARNING **]: Only change these defaults if you have plenty of extra storage. Each of these files is ~1-3GB.
+                         # [** WARNING **]: Only change these defaults if you have plenty of extra storage. 
+                         ## Each of these files is ~1-3GB.
                          ## Download and save the full .npz/.gz files.
                          download_full_ld=F,
                          ## Specify where to save these files.
