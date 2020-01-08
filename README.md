@@ -92,7 +92,7 @@ gglz <- ggLocusZoom(# Specify where the summary stats file is.
                     sumstats_path="./example_data/BST1_Nalls23andMe_2019_subset.txt",
                     
                     # Specify where the pre-computed LD matrix is.
-                    LD_path="../example_data/BST1_UKB-LD.RDS",
+                    LD_path="./example_data/BST1_UKB-LD.RDS",
                     
                     # Is the LD matrix in units of r? (as opposed to r2)
                     LD_units="r",
