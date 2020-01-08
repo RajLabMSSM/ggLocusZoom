@@ -26,7 +26,8 @@ In command line:
 ### 2. Prepare your data  
 
 #### GWAS/QTL summary statistics
-- This file can be comma-separated (`.csv`/`.txt`), tab-separated (`.tsv`/`txt`). It can also be compressed (`.gz`).
+- This file can be comma-separated (`.csv`/`.txt`) or tab-separated (`.tsv`/`txt`).  
+- It can also be compressed (`.gz`).
 - Required columns in summary stats data (one SNP per row):
   + `SNP` :  RSID (e.g. rs4698412)
   + `P` : Uncorrected p-value from GWAS (e.g. 2.058e-28)
