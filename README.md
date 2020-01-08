@@ -15,6 +15,8 @@ So I made a user-friendly version of it in R that allows you to customize it as 
 
 ## How?  
 
+*The following tutorial can also be downloaded as an Rscript [here](https://github.com/RajLabMSSM/ggLocusZoom/blob/master/example_script.R).*
+
 ### 1. Clone this GitHub repo  
 In command line:  
 `git clone https://github.com/RajLabMSSM/ggLocusZoom.git`  

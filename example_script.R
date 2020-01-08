@@ -1,7 +1,16 @@
 
+# ------------------------------------- #
+# ------------------------------------- #
+# -------- ggLocusZoom example -------- #
+# ------------------------------------- #
+# ------------------------------------- #
+
+
+# Import the functions
 source("./functions/ggLocusZoom.R")
 
 
+# Get LD
 LD_path <- LD.UKBiobank(# Specify where the summary stats file is.
   sumstats_path="./example_data/BST1_Nalls23andMe_2019_subset.txt", 
   
@@ -33,7 +42,7 @@ print(LD_path)
 
 
 
-
+# Run ggLocusZoom
 gglz <- ggLocusZoom(# Specify where the summary stats file is.
   sumstats_path="./example_data/BST1_Nalls23andMe_2019_subset.txt",
   
