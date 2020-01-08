@@ -1,5 +1,5 @@
 
-source('./Rscripts/UKBiobank_LD.R')
+source('./functions/UKBiobank_LD.R')
 
 ggLocusZoom <- function(sumstats_path, 
                         LD_path,

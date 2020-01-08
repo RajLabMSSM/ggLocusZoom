@@ -32,13 +32,13 @@ In command line:
   
 #### LD matrix  
 
-##### Method A: Supply your own LD matrix  
+##### *Method A*: Supply your own LD matrix  
 
 - An *n* x *n* matrix where *n* is the number of SNPs in your summary stats file. Column and row names must be the RSIDs of the SNPs.
 - Can be `.RDS`, `.csv`, `.tsv`, or `.txt` format.  
 - If using this method, you can skip right to step 3. below.  
 
-##### Method B: Use the `LD.UKBibank()` function to download the LD matrix  
+##### *Method B*: Use the `LD.UKBibank()` function to download the LD matrix  
 
 - If you don't have your own LD matrix, you can download it via the `LD.UKBibank()` function provided here. It will return the path to where the LD matrix was saved.
 
@@ -46,6 +46,8 @@ In command line:
   + *For Mount Sinai employees and affiliates only*: That said, you can speed up this process a lot by logging into Chimera (Mount Sinai computing cluster). If you set `chimera=T`, then `LD.UKBibank()` will automatically find the UKB LD files that I've pre-downloaded, and imports the one you need. 
 
 ```
+source("./functions/ggLocusZoom.R")
+
 LD_path <- LD.UKBiobank(# Specify where the summary stats file is.
                          sumstats_path="./example_data/BST1_Nalls23andMe_2019_subset.txt", 
                          
@@ -78,7 +80,7 @@ print(LD_path)
 
 ```
 # Import the functions
-source("./Rscripts/ggLocusZoom.R")
+source("./functions/ggLocusZoom.R")
 
 # Run 
 gglz <- ggLocusZoom(# Specify where the summary stats file is.
