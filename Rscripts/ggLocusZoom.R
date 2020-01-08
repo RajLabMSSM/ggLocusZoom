@@ -1,5 +1,5 @@
 
-
+source('./Rscripts/UKBiobank_LD.R')
  
 ggLocusZoom <- function(sumstats_path, 
                         LD_path,
@@ -42,7 +42,7 @@ ggLocusZoom <- function(sumstats_path,
   r2.dat <- r2.dat %>% mutate(r2.group=cut(r2, breaks =  c(0,.2,.4,.6,.8,1), right=F, 
                                  labels=c("very low","low","medium","high","very high")))
   ## Merge the r2 with your original
-  dat <- merge(dat, r2.dat, by="SNP")  
+  dat <- merge(dat, r2.dat, by="SNP", all.x=T)  
   
   # Now, convert it to a GRanges object
   dat <- dat %>% dplyr::mutate(SEQnames = paste0("chr",CHR))
