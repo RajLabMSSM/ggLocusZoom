@@ -37,7 +37,7 @@ In command line:
 - An *n* x *n* matrix where *n* is the number of SNPs in your summary stats file. Column and row names must be the RSIDs of the SNPs.
 - Can be `.RDS`, `.csv`, `.tsv`, or `.txt` format.  
 
-##### Method 2: Use the LD.UKBibank() function to download the LD matrix  
+##### Method 2: Use the `LD.UKBibank()` function to download the LD matrix  
 
 - If you don't have your own LD matrix, you can download it via the `LD.UKBibank()` function provided here. It will return the path to where the LD matrix was saved.
 
@@ -46,7 +46,7 @@ In command line:
 
 ```
 LD_path <- LD.UKBiobank(# Specify where the summary stats file is.
-                         sumstats_path, 
+                         sumstats_path="./example_data/BST1_Nalls23andMe_2019_subset.txt", 
                          
                          # The folder where you want to save the LD matrix 
                          # (defaults to ./LD)
@@ -73,7 +73,8 @@ LD_path <- LD.UKBiobank(# Specify where the summary stats file is.
 print(LD_path)
 ```
 
-### 3. Open R     
+### 3. Run `ggLocusZoom()` in R  
+
 ```
 # Import the functions
 source("./Rscripts/ggLocusZoom.R")

@@ -1,6 +1,6 @@
 
 source('./Rscripts/UKBiobank_LD.R')
- 
+
 ggLocusZoom <- function(sumstats_path, 
                         LD_path,
                         LD_units="r",
