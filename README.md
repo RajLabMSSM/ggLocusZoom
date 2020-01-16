@@ -78,17 +78,7 @@ LD_path <- LD.UKBiobank(# Specify where the summary stats file is.
                         ## Only change these defaults if you have plenty of extra storage. 
                         ## Each of these files is ~1-3GB.
                         ## Download and save the full .npz/.gz files.
-                        download_full_ld=F, 
-                         
-                        # Use pre-downloaded LD files on Chimera computing cluster 
-                        # (Mount Sinai employees and affiliates only). 
-                        # Must be logged onto Chimera and have 
-                        # access to the 'pd-omics' project.
-                        chimera=F, 
-                        
-                        # [** WARNING **]: Only change these defaults if you have plenty of extra storage. Each of these files is ~1-3GB.
-                        ## Download and save the full .npz/.gz files.
-                        download_full_ld=T,
+                        download_full_ld=F,   
                         
                         # You can use either 'wget' or 'axel' to download the files
                         method = "axel",
