@@ -16,10 +16,10 @@ LD_path <- LD.UKBiobank(# Specify where the summary stats file is.
   
   # The folder where you want to save the LD matrix 
   # (defaults to ./LD)
-  results_path="./LD",
+  output.path="./LD",
   
   # If =T , will overwrite a pre-existing LD file with the same name.
-  force_new_LD=F,
+  force_new_LD=T,
   
   # The same of the locus 
   # (defaults to "_")
@@ -33,9 +33,14 @@ LD_path <- LD.UKBiobank(# Specify where the summary stats file is.
   
   # [** WARNING **]: Only change these defaults if you have plenty of extra storage. Each of these files is ~1-3GB.
   ## Download and save the full .npz/.gz files.
-  download_full_ld=F,
-  ## Specify where to save these files.
-  full_ld_path="./UKB_LD")
+  download_full_ld=T,
+  
+  # You can use either 'wget' or 'axel' to download the files
+  method = "axel",
+  
+  # Delete the full ld files after you're done converting them into .RDS
+  remove_tmps=T
+  )
 print(LD_path)
 
 
@@ -72,4 +77,8 @@ gglz <- ggLocusZoom(# Specify where the summary stats file is.
   
   # Plot LD with the leda SNP as a categorical variable 
   # (very low, low, medium, high, very high) or a continuous variable (0-1).
-  categorical_r2=T)
+  categorical_r2=T
+  )
+
+
+

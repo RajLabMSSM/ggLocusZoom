@@ -1,13 +1,18 @@
 
 
-LD.UKBiobank <- function(sumstats_path, 
-                         results_path="./LD",
+LD.UKBiobank <- function(sumstats_path=NULL,
+                         chrom=NULL,
+                         min_pos=NULL,
+                         output.path="./LD",
                          force_new_LD=F,
                          locus=NULL,
                          chimera=F, 
-                         download_full_ld=F,
-                         full_ld_path="./UKB_LD"){
-   
+                         download_full_ld=F, 
+                         method="axel", 
+                         nThreads=4,
+                         return_matrix=F,
+                         remove_tmps=F){
+  # Find LD prefix
   LD.UKB_find_ld_prefix <- function(chrom, min_pos){
     bp_starts <- seq(1,252000001, by = 1000000)
     bp_ends <- bp_starts+3000000
@@ -15,66 +20,57 @@ LD.UKBiobank <- function(sumstats_path,
     file.name <- paste0("chr",chrom,"_", bp_starts[i],"_", bp_ends[i])
     return(file.name)
   }
+   
   
-  
-  LD.download_UKB_LD <- function(LD.file.list, 
-                                 out.path="/sc/orga/projects/pd-omics/tools/polyfun/UKBB_LD/",
+  LD.download_UKB_LD <- function(LD.prefixes, 
+                                 output.path="/sc/orga/projects/pd-omics/tools/polyfun/UKBB_LD/",
                                  alkes_url="https://data.broadinstitute.org/alkesgroup/UKBB_LD",
-                                 background=T){
-    flags <- ifelse(background,"-bqc","qc")
-    dir.create(out.path, showWarnings = F, recursive = T)
-    for(f in LD.file.list){ 
-      gz.path <- file.path(alkes_url,paste0(f,".gz"))
-      npz.path <- file.path(alkes_url,paste0(f,".npz"))
-      # https://stackoverflow.com/questions/21365251/how-to-run-wget-in-background-for-an-unattended-download-of-files
-      ## -bqc makes wget run in the background quietly
-      system(paste("wget",gz.path,"-np",flags,"-P",out.path))
-      cmd <- paste("wget",npz.path,"-np",flags,"-P",out.path)
-      print(cmd)
-      system(cmd)
+                                 background=T, 
+                                 force_overwrite=F,
+                                 method="axel"){ 
+    for(f in LD.prefixes){ 
+      gz.url <- file.path(alkes_url,paste0(f,".gz"))
+      npz.url <- file.path(alkes_url,paste0(f,".npz")) 
+       
+      for(furl in c(gz.url, npz.url)){
+        if(tolower(method)=="axel"){
+          out.file <- axel(input.url = furl,
+                           output.path = output.path,
+                           background = background,
+                           nThreads = nThreads, 
+                           force_overwrite = force_overwrite)
+        }
+        if(tolower(method)=="wget"){
+          out.file <- wget(input.url = furl, 
+                           output.path = output.path, 
+                           background = background,
+                           force_overwrite = T) 
+        } 
+      }
     }
+    return(gsub("*.npz$","",out.file))
   }
   
   #### Support functions
   
-  tryFunc <- function(input, func) {
+  tryFunc <- function(input, func, ...){
     out <- tryCatch(
-      {
-        # Just to highlight: if you want to use more than one 
-        # R expression in the "try" part then you'll have to 
-        # use curly brackets.
-        # 'tryCatch()' will return the last evaluated expression 
-        # in case the "try" part was completed successfully
-        
-        func(input) 
-        # The return value of `readLines()` is the actual value 
-        # that will be returned in case there is no condition 
-        # (e.g. warning or error). 
-        # You don't need to state the return value via `return()` as code 
-        # in the "try" part is not wrapped insided a function (unlike that
-        # for the condition handlers for warnings and error below)
+      { 
+        func(input, ...)  
       },
       error=function(cond) {
         message(paste("URL does not seem to exist:", input))
         message("Here's the original error message:")
-        message(cond)
-        # Choose a return value in case of error
+        message(cond) 
         return(NA)
       },
       warning=function(cond) {
         message(paste("URL caused a warning:", input))
         message("Here's the original warning message:")
-        message(cond)
-        # Choose a return value in case of warning
+        message(cond) 
         return(NULL)
       },
-      finally={
-        # NOTE:
-        # Here goes everything that should be executed at the end,
-        # regardless of success or error.
-        # If you want more than one expression to be executed, then you 
-        # need to wrap them in curly brackets ({...}); otherwise you could
-        # just have written 'finally=<expression>' 
+      finally={ 
         message(paste("Processed URL:", input))
         message("Some other message at the end")
       }
@@ -82,36 +78,50 @@ LD.UKBiobank <- function(sumstats_path,
     return(out)
   }
   
-  
   printer <- function(..., v=T){if(v){print(paste(...))}}
   
-  
-  
+  ## ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  ## Quickstart
+  # sumstats_path="./example_data/BST1_Nalls23andMe_2019_subset.txt"
+  # chrom=NULL
+  # min_pos=NULL
+  # output.path="./LD"
+  # force_new_LD=F
+  # locus="BST1"
+  # chimera=F
+  # download_full_ld=T
+  # method="axel"
+  # nThreads=4
   
   # Begin download
-  finemap_DT <- data.table::fread(sumstats_path)
+  if(!is.null(sumstats_path)){
+    printer("+ Assigning chrom and min_pos based on summary stats file")
+    # sumstats_path="./example_data/BST1_Nalls23andMe_2019_subset.txt"
+    finemap_DT <- data.table::fread(sumstats_path, nThread = 4)
+    chrom <- unique(finemap_DT$CHR)
+    min_pos <- min(finemap_DT$POS) 
+    LD.prefixes <- LD.UKB_find_ld_prefix(chrom=chrom, min_pos=min_pos)
+  }
+  
   alkes_url <- "https://data.broadinstitute.org/alkesgroup/UKBB_LD"
   URL <- alkes_url 
-  chrom <- unique(finemap_DT$CHR)
-  min_pos <- min(finemap_DT$POS) 
-  file.name <- LD.UKB_find_ld_prefix(chrom=chrom, min_pos=min_pos)
-  printer("+ UKB LD file name:",file.name)
   
-  gz.path <- file.path(alkes_url, paste0(file.name,".gz")) 
-  npz.path <- file.path(alkes_url, paste0(file.name,".npz"))
-  
+  printer("+ UKB LD file name:",LD.prefixes)  
   chimera.path <- "/sc/orga/projects/pd-omics/tools/polyfun/UKBB_LD"
-  UKBB.LD.file <- file.path(results_path, paste(locus,"UKB-LD.RDS",sep="_" ))
+  UKBB.LD.RDS <- file.path(output.path, paste(locus,"UKB-LD.RDS",sep="_" ))
   
   if(download_full_ld){
     printer("+ LD:: Downloading full .gz/.npz UKB files and saving to disk.") 
-    URL <- LD.download_UKB_LD(LD.file.list = file.name,
-                               out.path = full_ld_path, 
-                               background = F)
+    URL <- LD.download_UKB_LD(LD.prefixes = LD.prefixes,
+                              output.path = output.path, 
+                              background = F,
+                              force_overwrite = force_new_LD, 
+                              method = method)
+    server <- F
   } else {
     if(chimera){  
-      if(file.exists(file.path(chimera.path, paste0(file.name,".gz")))  & 
-         file.exists(file.path(chimera.path, paste0(file.name,".npz"))) ){
+      if(file.exists(file.path(chimera.path, paste0(LD.prefixes,".gz")))  & 
+         file.exists(file.path(chimera.path, paste0(LD.prefixes,".npz"))) ){
         printer("+ LD:: Pre-existing UKB LD gz/npz files detected. Importing...") 
         URL <- chimera.path
       }  
@@ -121,23 +131,19 @@ LD.UKBiobank <- function(sumstats_path,
   }
   
   
-  
-  
-  
   # RSIDs file
   # rsids <- data.table::fread(gz.path, nThread = 4) 
-  if(file.exists(UKBB.LD.file) & force_new_LD!=T){
-    printer("POLYFUN:: Pre-existing UKB_LD.RDS file detected. Importing...")
-    LD_matrix <- readRDS(UKBB.LD.file)
-  } else {
-    # POLYFUN.load_conda(server = server)
-    reticulate::source_python(file.path(polyfun,"load_ld.py"))
+  if(file.exists(UKBB.LD.RDS) & force_new_LD!=T){
+    printer("+ LD:: Pre-existing UKB_LD.RDS file detected. Importing...")
+    LD_matrix <- readRDS(UKBB.LD.RDS)
+  } else { 
     printer("+ LD:: ...this could take some time...")
-    
-    ld.out <- tryFunc(input = file.path(URL, file.name), load_ld) 
+    reticulate::source_python(file.path("functions","load_ld.py"))
+    # load_ld(ld_prefix=URL, server=F)
+    ld.out <- tryFunc(input = URL, load_ld, server = server)
     # LD matrix
     ld_R <- ld.out[[1]] 
-    # head(ld_R)[1:10]
+    # head(ld_R)[1:10,]
     # SNP info 
     # ld_snps <- data.table::data.table( reticulate::py_to_r(ld.out[[2]]) ) 
     ld_snps <- data.table::data.table(ld.out[[2]])
@@ -152,17 +158,25 @@ LD.UKBiobank <- function(sumstats_path,
     row.names(LD_matrix) <- ld_snps.sub$rsid
     colnames(LD_matrix) <- ld_snps.sub$rsid 
     LD_matrix[is.na(LD_matrix)] <- 0
+    # Save LD matrix as RDS
     printer("LD matrix dimensions", paste(dim(LD_matrix),collapse=" x "))
-    printer("+ POLYFUN:: Saving LD =>",UKBB.LD.file)
-    dir.create(dirname(UKBB.LD.file), showWarnings = F, recursive = T)
-    saveRDS(LD_matrix, UKBB.LD.file)
+    printer("+ POLYFUN:: Saving LD =>",UKBB.LD.RDS)
+    dir.create(dirname(UKBB.LD.RDS), showWarnings = F, recursive = T)
+    saveRDS(LD_matrix, UKBB.LD.RDS)
+    
+    if(remove_tmps){
+      printer("+ Removing .gz/.npz files.")
+      file.remove(paste0(URL,".gz"))
+      file.remove(paste0(URL,".npz"))
+    }
   }  
   if(return_matrix){
     return(LD_matrix) 
   } else {
-    return(UKBB.LD.file)
+    return(UKBB.LD.RDS)
   } 
 }
+
 
 
 

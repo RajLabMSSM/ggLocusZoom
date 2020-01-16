@@ -1,5 +1,6 @@
 
 source('./functions/UKBiobank_LD.R')
+source('./functions/downloaders.R')
 
 ggLocusZoom <- function(sumstats_path, 
                         LD_path,
@@ -103,8 +104,8 @@ ggLocusZoom <- function(sumstats_path,
     scale_x_continuous(name = paste0("BP (",gr.snp$SEQnames[1],")"),
                        labels=function(x)x/1000000)
   if(leadSNP.line){
-    trks <- trks +geom_vline(xintercept = lead.snp$POS, 
-                             color="red", alpha=.6, size=.3, linetype='solid') 
+    trks <- trks + geom_vline(xintercept = lead.snp$POS, 
+                              color="red", alpha=.6, size=.3, linetype='solid') 
   }
   # Print
   if(show_plot) print(trks)
