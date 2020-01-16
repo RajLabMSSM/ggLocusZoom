@@ -8,7 +8,7 @@ LD.UKBiobank <- function(sumstats_path=NULL,
                          locus=NULL,
                          chimera=F, 
                          download_full_ld=F, 
-                         method="axel", 
+                         download_method="axel", 
                          nThreads=4,
                          return_matrix=F,
                          remove_tmps=F){
@@ -23,24 +23,24 @@ LD.UKBiobank <- function(sumstats_path=NULL,
    
   
   LD.download_UKB_LD <- function(LD.prefixes, 
-                                 output.path="/sc/orga/projects/pd-omics/tools/polyfun/UKBB_LD/",
+                                 output.path="./LD",
                                  alkes_url="https://data.broadinstitute.org/alkesgroup/UKBB_LD",
                                  background=T, 
                                  force_overwrite=F,
-                                 method="axel"){ 
+                                 download_method="axel"){ 
     for(f in LD.prefixes){ 
       gz.url <- file.path(alkes_url,paste0(f,".gz"))
       npz.url <- file.path(alkes_url,paste0(f,".npz")) 
        
       for(furl in c(gz.url, npz.url)){
-        if(tolower(method)=="axel"){
+        if(tolower(download_method)=="axel"){
           out.file <- axel(input.url = furl,
                            output.path = output.path,
                            background = background,
                            nThreads = nThreads, 
                            force_overwrite = force_overwrite)
         }
-        if(tolower(method)=="wget"){
+        if(tolower(download_method)=="wget"){
           out.file <- wget(input.url = furl, 
                            output.path = output.path, 
                            background = background,
@@ -90,7 +90,7 @@ LD.UKBiobank <- function(sumstats_path=NULL,
   # locus="BST1"
   # chimera=F
   # download_full_ld=T
-  # method="axel"
+  # download_method="axel"
   # nThreads=4
   
   # Begin download
@@ -116,7 +116,7 @@ LD.UKBiobank <- function(sumstats_path=NULL,
                               output.path = output.path, 
                               background = F,
                               force_overwrite = force_new_LD, 
-                              method = method)
+                              download_method = download_method)
     server <- F
   } else {
     if(chimera){  
@@ -160,7 +160,7 @@ LD.UKBiobank <- function(sumstats_path=NULL,
     LD_matrix[is.na(LD_matrix)] <- 0
     # Save LD matrix as RDS
     printer("LD matrix dimensions", paste(dim(LD_matrix),collapse=" x "))
-    printer("+ POLYFUN:: Saving LD =>",UKBB.LD.RDS)
+    printer("+ LD:: Saving LD =>",UKBB.LD.RDS)
     dir.create(dirname(UKBB.LD.RDS), showWarnings = F, recursive = T)
     saveRDS(LD_matrix, UKBB.LD.RDS)
     
