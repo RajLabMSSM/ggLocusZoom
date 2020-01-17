@@ -9,7 +9,7 @@ There is a [standalone version of LocusZoom](https://github.com/statgen/locuszoo
 
 So I made a user-friendly version of it in R that allows you to customize it as a ggplot-like object.
 
-**Note**: [my.LocusZoom](https://my.locuszoom.org) now offers the ability to upload all your sum stats at once and make plots for each locus, which helps reduce the redundancy of making each plot individually.
+**Note**: [my.LocusZoom](https://my.locuszoom.org) now offers the ability to upload all your sum stats at once and make plots for each locus, which helps reduce the redundancy of making each plot individually. That said, it currently doesn't let you customize the resulting figures.
   
 <hr>
 
