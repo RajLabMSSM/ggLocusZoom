@@ -18,7 +18,7 @@ wget <- function(input.url,
                ifelse(background,"-b",""),
                ifelse(continue,"-c",""),
                ifelse(quiet,"-q",""),
-               ifelse(show_progress,"--show-progress",""),
+               # ifelse(show_progress,"--show-progress",""),
                "-P",output.path,
                ifelse(force_overwrite,"","--no-clobber"))
   # print(cmd)

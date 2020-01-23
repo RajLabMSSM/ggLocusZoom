@@ -81,7 +81,7 @@ LD_path <- LD.UKBiobank(# Specify where the summary stats file is.
                         download_full_ld=F,   
                         
                         # You can use either 'wget' or 'axel' to download the files
-                        method = "axel",
+                        download_method = "axel",
                         
                         # Delete the full .gz/.npz ld files after you're done converting them into .RDS
                         remove_tmps=T)
