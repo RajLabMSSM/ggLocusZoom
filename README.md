@@ -66,7 +66,7 @@ LD_path <- LD.UKBiobank(# Specify where the summary stats file is.
                        
                         # The same of the locus 
                         # (defaults to "_")
-                        locus="BST",
+                        locus="BST1",
                         
                         # Use pre-downloaded LD files on Chimera computing cluster 
                         ## (Mount Sinai employees and affiliates only). 
