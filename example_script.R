@@ -9,7 +9,6 @@
 # Import the functions
 source("./functions/ggLocusZoom.R")
 
-
 # Get LD
 LD_path <- LD.UKBiobank(# Specify where the summary stats file is.
   sumstats_path="./example_data/BST1_Nalls23andMe_2019_subset.txt", 
@@ -36,7 +35,7 @@ LD_path <- LD.UKBiobank(# Specify where the summary stats file is.
   download_full_ld=T,
   
   # You can use either 'wget' or 'axel' to download the files
-  method = "axel",
+  download_method = "axel",
   
   # Delete the full ld files after you're done converting them into .RDS
   remove_tmps=T
@@ -52,7 +51,7 @@ gglz <- ggLocusZoom(# Specify where the summary stats file is.
   sumstats_path="./example_data/BST1_Nalls23andMe_2019_subset.txt",
   
   # Specify where the pre-computed LD matrix is.
-  LD_path="../example_data/BST1_UKB-LD.RDS",
+  LD_path="./example_data/BST1_UKB-LD.RDS",
   
   # Is the LD matrix in units of r? (as opposed to r2)
   LD_units="r",
