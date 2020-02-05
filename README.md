@@ -24,7 +24,7 @@ In command line:
 
 #### 1.5 Install conda environment  
 Optional: You can avoid the hassle of installing different dependencies by creating a conda environment from this yaml file:
-`conda env create -f gglocuszoom.yml`
+`conda env create -f gglocuszoom.yml`  
 `conda activate gglocuszoom`
 
 
