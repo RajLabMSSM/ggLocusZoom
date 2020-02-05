@@ -5,6 +5,12 @@
 # ------------------------------------- #
 # ------------------------------------- #
 
+reticulate::use_condaenv("")
+
+pd <- reticulate::import("pandas") 
+
+pd$read_parquet()
+
 
 # Import the functions
 source("./functions/ggLocusZoom.R")

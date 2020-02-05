@@ -20,7 +20,12 @@ So I made a user-friendly version of it in R that allows you to customize it as 
 ### 1. Clone this GitHub repo  
 In command line:  
 `git clone https://github.com/RajLabMSSM/ggLocusZoom.git`  
-`cd ggLocusZoom`
+`cd ggLocusZoom`  
+
+#### 1.5 Install conda environment  
+Optional: You can avoid the hassle of installing different dependencies by creating a conda environment from this yaml file:
+`conda env create -f gglocuszoom.yml`
+`conda activate gglocuszoom`
 
 
 ### 2. Prepare your data  

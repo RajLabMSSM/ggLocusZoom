@@ -1,10 +1,12 @@
+# Have to install these
 import numpy as np
 import pandas as pd
+import scipy.sparse as sparse
+import requests
+# Built into python
 import logging
 import os
-import scipy.sparse as sparse
 from io import BytesIO
-import requests
 
 
 def find_ld_prefix(chrom, min_pos):
