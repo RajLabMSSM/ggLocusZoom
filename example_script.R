@@ -5,13 +5,6 @@
 # ------------------------------------- #
 # ------------------------------------- #
 
-reticulate::use_condaenv("")
-
-pd <- reticulate::import("pandas") 
-
-pd$read_parquet()
-
-
 # Import the functions
 source("./functions/ggLocusZoom.R")
 
@@ -82,7 +75,11 @@ gglz <- ggLocusZoom(# Specify where the summary stats file is.
   
   # Plot LD with the leda SNP as a categorical variable 
   # (very low, low, medium, high, very high) or a continuous variable (0-1).
-  categorical_r2=T
+  categorical_r2=T, 
+  
+  # By default (leadGWAS), it will pick the SNP with the lowest p-value as the index SNP for which to extract LD. 
+  ## Alternatively, you can provide an RSID contained within the dataset as the index SNP (e.g. "rs6849244").
+  index_snp="leadGWAS"
   )
 
 

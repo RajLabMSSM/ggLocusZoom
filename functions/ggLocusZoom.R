@@ -11,7 +11,8 @@ ggLocusZoom <- function(sumstats_path,
                         width=10,
                         title="",
                         leadSNP.line=T,
-                        categorical_r2=T){
+                        categorical_r2=T,
+                        index_snp="leadGWAS"){
   library(ggbio) # This package ALIGNS lots of different data types in tracks (like UCSC Genome Browser).
   # See ggbio tutorial for more options: http://bioconductor.org/packages/release/bioc/vignettes/ggbio/inst/doc/ggbio.pdf
   library(dplyr)
@@ -21,12 +22,17 @@ ggLocusZoom <- function(sumstats_path,
   
   # ------------- [1.] IMPORT DATA ------------- 
   # Start with a dataframe containing your SNP-wise summary stats
-  dat <- data.table::fread(sumstats_path)
+  dat <- data.table::fread(sumstats_path, nThread = 4)
   
   
   # ------------- [2. PREPARE DATA] ------------- 
   # Identify the lead SNP from the GWAS
-  dat <- dat %>% mutate(leadSNP = ifelse(P==min(dat$P),T,F))
+  if(index_snp=="leadGWAS"){
+    dat <- dat %>% mutate(leadSNP = ifelse(P==min(dat$P),T,F))
+  } else {
+    dat <- dat %>% mutate(leadSNP = ifelse(SNP==index_snp,T,F))
+  }
+ 
   
   # Get your LD 
   if(endsWith(LD_path,".RDS")){
