@@ -19,3 +19,5 @@ dependencies:
   - r-biocmanager
   - bioconductor-ensdb.hsapiens.v75 
   - bioconductor-biovizbase
+  # Command line
+  - wget

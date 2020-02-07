@@ -2,6 +2,9 @@
 source('./functions/UKBiobank_LD.R')
 source('./functions/downloaders.R')
 
+# BiocManager::install("interactiveDisplay")
+# https://www.bioconductor.org/packages/release/bioc/vignettes/interactiveDisplay/inst/doc/interactiveDisplay.pdf
+
 ggLocusZoom <- function(sumstats_path, 
                         LD_path,
                         LD_units="r",
@@ -75,6 +78,7 @@ ggLocusZoom <- function(sumstats_path,
       scale_shape_manual(values=c(16,18)) +
       annotate(geom="text", x = lead.snp$POS, y = -log10(lead.snp$P)*1.05,label=lead.snp$SNP, size=3) +
       theme_bw()
+    # ggbio::zoom_in(fac = 10) 
   } 
   # track.manhattan
   

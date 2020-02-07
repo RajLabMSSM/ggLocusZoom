@@ -153,23 +153,35 @@ gglz <- ggLocusZoom(# Specify where the summary stats file is.
 - `UKB_LD.RDS`: LD matrix from [UKBiobank](https://www.ukbiobank.ac.uk), preprocessed and made available by the [Alkes Price lab](https://data.broadinstitute.org/alkesgroup/UKBB_LD).  
 - `BST1_Nalls23andMe_2019_subset.txt`: Summary stats from the PD GWAS in [Nalls et al. (2019)](https://www.biorxiv.org/content/10.1101/388165v3).  
 
-### R Dependencies  
-- [ggplot2](https://ggplot2.tidyverse.org)
-- [data.table](https://cran.r-project.org/web/packages/data.table/vignettes/datatable-intro.html)
-- [reticulate](https://rstudio.github.io/reticulate/)
-- [ggbio](https://bioconductor.org/packages/release/bioc/html/ggbio.html)
-- [dplyr](https://cran.r-project.org/package=dplyr/vignettes/dplyr.html)
-- [EnsDb.Hsapiens.v75](http://bioconductor.org/packages/release/data/annotation/html/EnsDb.Hsapiens.v75.html)
-- [BiocManager](https://cran.r-project.org/web/packages/BiocManager/vignettes/BiocManager.html)
-- [biovizBase](https://bioconductor.org/packages/release/bioc/html/biovizBase.html)
+### Dependencies  
+#### R
+- [ggplot2](https://ggplot2.tidyverse.org)  
+- [data.table](https://cran.r-project.org/web/packages/data.table/vignettes/datatable-intro.html)  
+- [reticulate](https://rstudio.github.io/reticulate/)  
+- [ggbio](https://bioconductor.org/packages/release/bioc/html/ggbio.html)  
+- [dplyr](https://cran.r-project.org/package=dplyr/vignettes/dplyr.html)  
+- [EnsDb.Hsapiens.v75](http://bioconductor.org/packages/release/data/annotation/html/EnsDb.Hsapiens.v75.html)  
+- [BiocManager](https://cran.r-project.org/web/packages/BiocManager/vignettes/BiocManager.html)  
+- [biovizBase](https://bioconductor.org/packages/release/bioc/html/biovizBase.html)  
+
+#### Python  
+- [numpy](https://anaconda.org/conda-forge/numpy)  
+- [pandas](https://anaconda.org/conda-forge/pandas)  
+- [scipy](https://anaconda.org/conda-forge/scipy)  
+- [requests](https://anaconda.org/anaconda/requests)  
+
+#### Command Line  
+- [wget](https://anaconda.org/conda-forge/wget)  
+- [axel](https://github.com/axel-download-accelerator/axel) (*optional*)  
+- [anaconda](https://www.anaconda.com/distribution/) (*optional*)  
 
 <hr> 
 
 ## Who?  
 
-Brian M. Schilder  
-[Raj Lab](www.rajlab.org)  
-Department of Neuroscience  
-Department of Genetics & Genomic Sciences  
-Ronald M. Loeb Center for Alzheimer's Disease  
-Icahn School of Medicine at Mount Sinai  
+*Brian M. Schilder*  
+[*__Raj Lab__*](www.rajlab.org)  
+*Department of Neuroscience*  
+*Department of Genetics & Genomic Sciences*    
+*Ronald M. Loeb Center for Alzheimer's Disease*  
+*Icahn School of Medicine at Mount Sinai*  
