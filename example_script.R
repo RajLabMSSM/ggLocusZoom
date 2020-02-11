@@ -79,7 +79,14 @@ gglz <- ggLocusZoom(# Specify where the summary stats file is.
   
   # By default (leadGWAS), it will pick the SNP with the lowest p-value as the index SNP for which to extract LD. 
   ## Alternatively, you can provide an RSID contained within the dataset as the index SNP (e.g. "rs6849244").
-  index_snp="leadGWAS"
+  index_snp="leadGWAS",
+  
+  # Define the limits of the xlim (e.g. c(15239141,16236140)). 
+  ## If NULL (default), then the min/max positions in the sumstats will be used.
+  xlims = NULL,
+  
+  # The maximum number of transcripts to show per gene in the Gene track
+  max_transcripts = 3
   )
 
 

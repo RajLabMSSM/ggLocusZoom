@@ -5,6 +5,26 @@ source('./functions/downloaders.R')
 # BiocManager::install("interactiveDisplay")
 # https://www.bioconductor.org/packages/release/bioc/vignettes/interactiveDisplay/inst/doc/interactiveDisplay.pdf
 
+# Support functions for converting gene names
+hgnc_to_ensembl <- function(gene_symbols){  
+  # columns(EnsDb.Hsapiens.v75::EnsDb.Hsapiens.v75)
+  conversion <- AnnotationDbi::mapIds(EnsDb.Hsapiens.v75::EnsDb.Hsapiens.v75,
+                                   keys = gene_symbols,
+                                   keytype = "SYMBOL",
+                                   column = "GENEID")
+  return(conversion)
+}
+ 
+ensembl_to_hgnc <- function(ensembl_ids){
+  conversion <- AnnotationDbi::mapIds(EnsDb.Hsapiens.v75::EnsDb.Hsapiens.v75,
+                                   keys = ensembl_ids,
+                                   keytype = "GENEID",
+                                   column = "SYMBOL")
+  return(conversion)
+}
+
+
+
 ggLocusZoom <- function(sumstats_path, 
                         LD_path,
                         LD_units="r",
@@ -15,7 +35,9 @@ ggLocusZoom <- function(sumstats_path,
                         title="",
                         leadSNP.line=T,
                         categorical_r2=T,
-                        index_snp="leadGWAS"){
+                        index_snp="leadGWAS",
+                        xlims=NULL, 
+                        max_transcripts=3){
   library(ggbio) # This package ALIGNS lots of different data types in tracks (like UCSC Genome Browser).
   # See ggbio tutorial for more options: http://bioconductor.org/packages/release/bioc/vignettes/ggbio/inst/doc/ggbio.pdf
   library(dplyr)
@@ -86,18 +108,44 @@ ggLocusZoom <- function(sumstats_path,
   # You can pull gene models from EnsDb.Hsapiens.v75. 
   # But there's often way more than you can plot, so you have to filter them.
   # Get the row of the leadSNP so you can focus on gene annotations around it.
-  lead.index <- which(gr.snp$leadSNP==T) 
-  lw <- 10 
-  track.genes <- autoplot(EnsDb.Hsapiens.v75::EnsDb.Hsapiens.v75, 
+  lead.index <- which(gr.snp$leadSNP==T)  
+  # if(gene_level==T){
+  #   print("+ Annotating at gene-level.")
+  #   db <- ensembldb::genes(EnsDb.Hsapiens.v75::EnsDb.Hsapiens.v75)
+  #   db.gr <- data.table::as.data.table(db) %>%
+  #     dplyr::mutate(index=row.names(.))  
+  #   db.gr <- db.gr %>% dplyr::group_by(gene_name) %>% dplyr::slice(1)
+  # }  
+    print("+ Annotating at transcript-level.") 
+    db.gr <- ensembldb::transcripts(EnsDb.Hsapiens.v75::EnsDb.Hsapiens.v75) %>%
+      data.table::as.data.table() %>%
+      dplyr::mutate(index=row.names(.)) %>% 
+      dplyr::group_by(gene_id) %>% 
+      dplyr::slice(1:max_transcripts)  
+  if(!"symbol" %in% colnames(db.gr)){
+    db.gr$symbol <- ensembl_to_hgnc(db.gr$gene_id)
+  }
+  # Subset to only the region encompassed by the sumstats
+  db.gr <- subset(db.gr, seqnames == unique(dat$CHR) &
+                    start >= min(dat$POS) &
+                    end <= max(dat$POS)) %>%  
+    GenomicRanges::makeGRangesFromDataFrame(keep.extra.columns = T) 
+  db.gr$symbol <- factor(db.gr$symbol, levels = unique(db.gr$symbol), ordered = T)
+    # dplyr::group_by(gene_name) %>%
+    # dplyr::top_n(n = top_transcripts, wt=seqnames)   
+  edb <- addFilter( EnsDb.Hsapiens.v75::EnsDb.Hsapiens.v75,  AnnotationFilter::TxIdFilter(db.gr$tx_id))   
+  track.genes <- autoplot(edb, 
                           # Have to limit (can only handle depth < 1000)
-                          which = gr.snp[(lead.index-lw):(lead.index+lw),], 
+                          which = db.gr,
                           names.expr = "gene_name",  
                           aes(fill=gene_name, color=gene_name),
                           show.legend=T)  +  
     theme_bw()
    
   
-  
+  if(is.null(xlims)){
+    xlims <- c(min(dat$POS), max(dat$POS))
+  }
   # [4.] ------------- MERGE TRACKS ------------- 
   # Add some features to tracks overall
   trks <- tracks(list("GWAS"=track.manhattan, "Genes"=track.genes), 
@@ -107,7 +155,8 @@ ggLocusZoom <- function(sumstats_path,
                  label.text.cex = .7, 
                  label.bg.fill = "grey12",
                  label.text.color = "white",
-                 label.text.angle = 90) 
+                 label.text.angle = 90,
+                 xlim = xlims) 
   #
   # BP_MB <- scales::trans_new("BP_MB", transform = function(x)x/1000000, inverse = function(x)x*1000000)
   trks <- trks +   
