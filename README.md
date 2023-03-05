@@ -194,7 +194,7 @@ gglz <- ggLocusZoom(# Specify where the summary stats file is.
 ## Who?  
 
 *Brian M. Schilder*  
-[*__Raj Lab__*](www.rajlab.org)  
+[*__Raj Lab__*](https://www.rajlab.org)  
 *Department of Neuroscience*  
 *Department of Genetics & Genomic Sciences*    
 *Ronald M. Loeb Center for Alzheimer's Disease*  
