@@ -1,3 +1,10 @@
+
+# :warning: Deprecation warning :warning:
+
+`ggLocusZoom` has since been deprecated and is now replaced by [`echoplot`](https://github.com/RajLabMSSM/echoplot) as part of the broader [*echoverse*](https://github.com/RajLabMSSM/echolocatoR#the-echoverse) suite. 
+The source code for `ggLocusZoom` is being kept here simply for posterity.
+
+
 # ggLocusZoom
  
 
